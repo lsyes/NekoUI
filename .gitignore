@@ -1,0 +1,7 @@
+/nekoui
+/dist/
+/build/
+*.log
+*.test
+*.prof
+coverage.out
