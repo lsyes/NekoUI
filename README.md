@@ -203,17 +203,3 @@ nekoui/
     ├── ime/                输入法诊断
     └── smoke/              最小冒烟程序
 ```
-
-## 已知限制
-
-- 只在 Linux + cgo 下构建；Windows/macOS 暂不支持。
-- Wayland 后端已在 KWin 上验证；GNOME Shell / sway 与嵌套合成器矩阵仍需补测。Wayland 的系统剪贴板尚未接入。
-- X11 输入法使用 over-the-spot XIM（`XIMPreeditPosition`）：候选窗跟随 caret；预编辑由输入法绘制，不是应用行内绘制。Wayland text-input-v3 的 preedit 是应用内绘制的。
-- 如果 IM 不提供 over-the-spot 风格，会回退到 `XIMPreeditNothing`；这类 IM 可能按鼠标位置而非 caret 定位候选窗。
-- 剪贴板是应用内的，尚未接入 X11 CLIPBOARD / Wayland data_device。
-- 文本按 rune 逐个 shaping，不处理复杂脚本连字、kerning 和字体 fallback 链。
-- 没有多窗口、无障碍树和 damage tracking；每帧整窗重绘。
-- Go 1.27/loong64 在特定内联/`-race` 组合下会破坏小聚合值；框架已用 `//go:noinline` 和指针写出规避 Size/Color 两类已知问题，细节见设计文档。
-- 布局支持 Column/Row/Flex/Card/Canvas/Scrollable，不支持 grid、baseline、intrinsic wrap 的 flexbox 全语义。
-
-这些不是“以后再说的细节”，而是下一阶段明确的工作项，见 [ROADMAP](docs/ROADMAP.md)。
